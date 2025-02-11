@@ -5,11 +5,15 @@ require_once '../src/models/Page.php';  // Inclusion du modèle Page
 // Utilisation de l'objet $pdo pour récupérer les pages
 $pages = Page::getAll($pdo);
 
+$action = $_GET['action'] ?? 'connexion';
+
+// Routage des actions
+switch ($action) {
+    case 'connexion':
+        header("Location: ../src/views/ConnexionView.php");
+        exit();
+        break;
+}
+
 ?>
 
-<h1>Bienvenue sur le CMS</h1>
-<ul>
-    <?php foreach ($pages as $page) : ?>
-        <li><a href="views/pages/page.php?id=<?= $page->getId() ?>"><?= htmlspecialchars($page->getTitle()) ?></a></li>
-    <?php endforeach; ?>
-</ul>

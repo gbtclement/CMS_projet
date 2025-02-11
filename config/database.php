@@ -1,5 +1,4 @@
 <?php
-// Connexion à la base de données via PDO
 try {
     // Paramètres de connexion
     $host = '127.0.0.1';
@@ -13,6 +12,9 @@ try {
     // Configuration des options PDO
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    // Vérification de la connexion
+    echo "Connexion réussie à la base de données.";  // Affiche un message de succès
 
 } catch (PDOException $e) {
     // Gestion des erreurs
