@@ -1,4 +1,6 @@
 <?php
+// La classe Page pour interagir avec la table `pages` de la base de données
+
 class Page {
     private $id;
     private $title;
@@ -47,16 +49,14 @@ class Page {
     }
 
     // Méthodes pour interagir avec la base de données
-    public static function create($title, $content) {
-        $pdo = Database::getConnection();
+    public static function create($pdo, $title, $content) {
         $stmt = $pdo->prepare("INSERT INTO pages (title, content) VALUES (:title, :content)");
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':content', $content);
         $stmt->execute();
     }
 
-    public static function getAll() {
-        $pdo = Database::getConnection();
+    public static function getAll($pdo) {
         $stmt = $pdo->query("SELECT * FROM pages");
         $pages = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -65,8 +65,7 @@ class Page {
         return $pages;
     }
 
-    public static function findById($id) {
-        $pdo = Database::getConnection();
+    public static function findById($pdo, $id) {
         $stmt = $pdo->prepare("SELECT * FROM pages WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
