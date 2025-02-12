@@ -10,6 +10,15 @@ switch ($action) {
         header("Location: ../src/views/pages/LoginView.php");
         exit();
         break;
+    case 'goToBo':
+        header("Location: ../src/views/AdminBackOfficeView.php");
+        break;
+    case 'listPage':
+        header("Location: ../src/views/ListPage.php");
+        break;
+    case 'createPage':
+        header("Location: ../src/views/CreatePage.php");
+        break;
 }
 
 ?>
