@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../config/Database.php';
+
+
 class User {
     private $id;
     private $username;
@@ -56,7 +59,6 @@ class User {
         $this->created_at = $created_at;
     }
 
-    // Méthodes pour interagir avec la base de données
     public static function create($username, $password, $role) {
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
@@ -72,20 +74,21 @@ class User {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            return new User($row['username'], $row['password'], $row['role'], $row['id'], $row['created_at']);
-        }
-        return null;
+        return $row;  
     }
-
+    
     public static function getAll() {
+
         $pdo = Database::getConnection();
         $stmt = $pdo->query("SELECT * FROM users");
         $users = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $users[] = new User($row['username'], $row['password'], $row['role'], $row['id'], $row['created_at']);
         }
+        
         return $users;
     }
+    
 }
 ?>

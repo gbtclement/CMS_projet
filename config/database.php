@@ -1,24 +1,24 @@
 <?php
-try {
-    // Paramètres de connexion
-    $host = '127.0.0.1';
-    $dbname = 'CMS_projet';
-    $username = 'root';
-    $password = '';
+class Database {
+    private static $instance = null; 
 
-    // Initialisation de la connexion PDO
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    public static function getConnection() {
+        if (self::$instance === null) {
+            try {
+                $host = '127.0.0.1';
+                $dbname = 'CMS_projet';
+                $username = 'root';
+                $password = '';
 
-    // Configuration des options PDO
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                self::$instance = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    // Vérification de la connexion
-    echo "Connexion réussie à la base de données.";  // Affiche un message de succès
-
-} catch (PDOException $e) {
-    // Gestion des erreurs
-    echo "Erreur de connexion : " . $e->getMessage();
-    exit; // Arrête l'exécution du script en cas d'erreur critique
+            } catch (PDOException $e) {
+                die("Erreur de connexion : " . $e->getMessage());
+            }
+        }
+        return self::$instance;
+    }
 }
 ?>
