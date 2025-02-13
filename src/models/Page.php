@@ -49,14 +49,14 @@ class Page {
     }
 
     // Méthodes pour interagir avec la base de données
-    public static function create($pdo, $title, $content) {
+    public static function createPage(PDO $pdo, $title, $content) {
         $stmt = $pdo->prepare("INSERT INTO pages (title, content) VALUES (:title, :content)");
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':content', $content);
         $stmt->execute();
     }
 
-    public static function getAll($pdo) {
+    public static function getAllPages(PDO $pdo) {
         $stmt = $pdo->query("SELECT * FROM pages");
         $pages = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -65,7 +65,7 @@ class Page {
         return $pages;
     }
 
-    public static function findById($pdo, $id) {
+    public static function findByIdPage(PDO $pdo, $id) {
         $stmt = $pdo->prepare("SELECT * FROM pages WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -75,5 +75,20 @@ class Page {
         }
         return null;
     }
+    
+    public static function updatePage(PDO $pdo, $id, $title, $content) {
+        $stmt = $pdo->prepare("UPDATE pages SET title = :title, content = :content WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+    
+    public static function deletePage(PDO $pdo, $id) {
+        $stmt = $pdo->prepare("DELETE FROM pages WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    
 }
 ?>

@@ -2,11 +2,11 @@
 
 session_start();
 
-require_once '../config/database.php';  // Inclusion du fichier de connexion à la base de données
-require_once '../src/models/Page.php';  // Inclusion du modèle Page
+require_once '../src/config/database.php';  // Inclusion du fichier de connexion à la base de données
+require_once '../src/controllers/pageController.php';
 
 // Utilisation de l'objet $pdo pour récupérer les pages
-$pages = Page::getAll($pdo);
+$pages = Page::getAllPages($pdo);
 
 $action = $_GET['action'] ?? 'connexion';
 
@@ -19,11 +19,21 @@ switch ($action) {
     case 'goToBo':
         header("Location: ../src/views/AdminBackOfficeView.php");
         break;
-    case 'listPage':
-        header("Location: ../src/views/ListPage.php");
-        break;
+
     case 'createPage':
-        header("Location: ../src/views/CreatePage.php");
+        createPage($pdo);
+        break;
+
+    case 'updatePage':
+        updatePage($pdo);
+        break;
+
+    case 'deletePage':
+        deletePage($pdo);
+        break;
+
+    case 'listPage':
+        listPage($pdo);
         break;
 }
 
@@ -55,6 +65,3 @@ switch ($action) {
 //         }
 //     }
 // }
-
-?>
-
