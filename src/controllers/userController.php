@@ -49,7 +49,7 @@ class UserController {
         }
     
         if (!isset($_SESSION['user'])) {
-            echo "Accès refusé : vous devez être connecté.";
+            header('Location: ../pages/LoginView.php');
             exit();
         }
     

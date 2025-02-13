@@ -35,8 +35,6 @@
         </section>
     </main>
 
-    <footer class="main-footer">
-        <p>&copy; 2025 Mon CMS. Tous droits réservés.</p>
-    </footer>
+    <?php include '../Footer.php'?>
 </body>
 </html>

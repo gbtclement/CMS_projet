@@ -45,5 +45,7 @@ $users = $controller->listUsers();
             </div>
         <?php endif; ?>
     </div>
+
+    <?php include '../Footer.php'?>
 </body>
 </html>
