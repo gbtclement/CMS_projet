@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/User.php';
 
 class UserController {
 
-    // Connexion utilisateur
+    // Connexion
     public function login() {
         session_start();
     
@@ -17,7 +17,7 @@ class UserController {
             if ($user) {
                 if ($password === $user['password']) {
                     $_SESSION['user'] = $user;
-                    header('Location: ../admin/Dashboard.php');
+                    header('Location: ../pages/Home.php');
                     exit();
                 } else {
                     echo "Identifiants incorrects";
@@ -28,17 +28,22 @@ class UserController {
         }
     }
     
-    // Déconnexion utilisateur
+    // Déconnexion
     public function logout() {
-        session_start();
+        $_SESSION = array();
+        
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time()-3600, '/');
+        }
+        
         session_destroy();
-        header("Location: /index.php");
+        
+        header("Location: ../pages/Home.php");
         exit();
     }
 
-    // Afficher tous les utilisateurs
+    // Afficher tous les utilisaterus
     public function listUsers() {
-        // Vérifier si la session n'est pas déjà démarrée
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -49,7 +54,7 @@ class UserController {
         }
     
         if ($_SESSION['user']['role'] !== 'admin') {
-            echo "Accès refusé : vous n'avez pas les permissions nécessaires.";
+            header('Location: ../pages/Home.php');
             exit();
         }
     

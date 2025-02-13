@@ -2,12 +2,12 @@
 require_once __DIR__ . '/../config/database.php';
 
 
-$action = $_GET['action'] ?? 'connexion';
+$action = $_GET['action'] ?? 'home';
 
 // Routage des actions
 switch ($action) {
-    case 'connexion':
-        header("Location: ../src/views/pages/LoginView.php");
+    case 'home':
+        header("Location: ../src/views/pages/Home.php");
         exit();
         break;
     case 'goToBo':
