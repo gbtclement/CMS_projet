@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // La classe Page pour interagir avec la table `pages` de la base de données
 
 class Page {
@@ -56,9 +57,11 @@ class Page {
         $stmt->execute();
     }
 
-    public static function getAllPages(PDO $pdo) {
+    public static function getAllPages() {
+        $pdo = Database::getConnection();
         $stmt = $pdo->query("SELECT * FROM pages");
         $pages = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $pages[] = new Page($row['title'], $row['content'], $row['id'], $row['created_at']);
         }
