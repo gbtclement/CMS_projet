@@ -4,7 +4,7 @@
 //  Modifier les pages
 //  
 //
-// Creer une page
+// Creer une pages
 ?>
 
 <div class="BO">
