@@ -9,7 +9,6 @@ class User {
     private $role;
     private $created_at;
 
-    // Constructeur
     public function __construct($username, $password, $role, $id = null, $created_at = null) {
         $this->id = $id;
         $this->username = $username;
@@ -18,7 +17,6 @@ class User {
         $this->created_at = $created_at;
     }
 
-    // Getter et Setter
     public function getId() {
         return $this->id;
     }
@@ -60,13 +58,16 @@ class User {
     }
 
     public static function create($username, $password, $role) {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $pdo = Database::getConnection();
+        
         $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $passwordHash);
         $stmt->bindParam(':role', $role);
         $stmt->execute();
     }
+    
 
     public static function findByUsername($username) {
         $pdo = Database::getConnection();
@@ -75,6 +76,13 @@ class User {
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row;  
+    }
+
+    public static function deleteById($id) {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
     
     public static function getAll() {
