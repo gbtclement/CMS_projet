@@ -30,4 +30,10 @@ switch ($action) {
     case 'logout':
         $userController->logout();
         break;
+    case 'createUser':
+        $userController->createUser();
+        break;
+    case 'deleteUser':
+        $userController->deleteUser();
+        break;
 }
