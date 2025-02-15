@@ -1,27 +1,33 @@
 <?php
 
 session_start();
-require_once '../src/config/database.php'; 
+require_once '../src/config/database.php';
 require_once '../src/controllers/pageController.php';
+require_once '../src/controllers/userController.php';
 
-$action = $_GET['action'] ?? 'home';
+$action = $_GET['action'] ?? 'goToHome';
+$pdo = Database::getConnection();
+$pageController = new PageController();
+$userController = new UserController();
 
 // Routage des actions
 switch ($action) {
-    case 'home':
-        header("Location: ../src/views/pages/Home.php");
-        exit();
+    case 'goToHome':
+        $pageController->goToHome();
         break;
-    case 'goToBo':
-        header("Location: ../src/views/pages/AdminBackOfficeView.php");
+    case 'goToDashboard':
+        $pageController->goToDashboard();
         break;
     case 'listPage':
-        header("Location: ../src/views/pages/ListPage.php");
+        $pageController->listPages();
         break;
     case 'createPage':
-        header("Location: ../src/views/pages/CreatePage.php");
+        $pageController->createPage($pdo);
+        break;
+    case 'login':
+        $userController->login();
+        break;
+    case 'logout':
+        $userController->logout();
         break;
 }
-
-?>
-

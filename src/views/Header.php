@@ -1,6 +1,6 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE){
+if (session_status()===PHP_SESSION_NONE){
     session_start();
 }
 
@@ -17,7 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../public/assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Prestaflop</title>
 </head>
@@ -28,18 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 Prestaflop
             </div>
             <div class="navigation" id="navigation">
-                <a href="../pages/Home.php" class="icon svg">
+                <a href="index.php?action=goToHome" class="icon svg">
                     Accueil
                 </a>
                 <?php if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 'admin'): ?>
-                    <a href="../admin/Dashboard.php" class="icon svg">
+                    <a href="index.php?action=goToDashboard" class="icon svg">
                         Dashboard
                     </a>
                 <?php endif; ?>
-                <a href="../pages/AdminBackOfficeView.php" class="icon svg">
-                    Bo
-                </a>
-                <a href="../pages/ListPage" class="icon svg">
+                <a href="index.php?action=listPage" class="icon svg">
                     Pages
                 </a>
             </div>
@@ -51,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </button>
                     </form>
                 <?php else: ?>
-                    <a href="../pages/LoginView.php" class="icon svg">
+                    <a href="index.php?action=login" class="icon svg">
                         Connexion
                     </a>
                 <?php endif; ?>

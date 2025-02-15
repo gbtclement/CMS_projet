@@ -1,4 +1,4 @@
-<?php include '../Header.php'?>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon CMS</title>
-    <link rel="stylesheet" href="../../../public/assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
     <main class="main-content">

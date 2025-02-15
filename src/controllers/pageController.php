@@ -47,7 +47,7 @@ class PageController
                 $error = "Le titre et le contenu de la page sont requis.";
             }
         }
-        include __DIR__ . '/../views/CreatePage.php';
+        include __DIR__ . '/../views/pages/CreatePage.php';
     }
 
     // Modifier une page
@@ -96,5 +96,22 @@ class PageController
     {
         $pages = Page::getAllPages();
         return $pages;
+    }
+
+    public function listPages()
+    {
+        include __DIR__ . '/../views/pages/ListPage.php';
+    }
+
+    public function goToHome(){
+        include __DIR__ . '/../views/pages/Home.php';
+    }
+
+    public function goToBo(){
+        include __DIR__ . '/../views/pages/AdminBackOfficeView.php';
+    }
+
+    public function goToDashboard(){
+        include __DIR__ . '/../views/admin/Dashboard.php';
     }
 }

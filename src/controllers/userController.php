@@ -6,7 +6,6 @@ class UserController {
 
     // Connexion
     public function login() {
-        session_start();
     
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $username = $_POST['username'];
@@ -17,7 +16,7 @@ class UserController {
             if ($user) {
                 if ($password === $user['password']) {
                     $_SESSION['user'] = $user;
-                    header('Location: ../pages/Home.php');
+                    header('Location: index.php?action=goToHome');
                     exit();
                 } else {
                     echo "Identifiants incorrects";
@@ -26,6 +25,7 @@ class UserController {
                 echo "Identifiants incorrects";
             }
         }
+        include __DIR__ . '/../views/pages/LoginView.php';
     }
     
     // Déconnexion
@@ -38,7 +38,7 @@ class UserController {
         
         session_destroy();
         
-        header("Location: ../pages/Home.php");
+        header("Location: index.php?action=goToHome");
         exit();
     }
 
@@ -49,12 +49,12 @@ class UserController {
         }
     
         if (!isset($_SESSION['user'])) {
-            header('Location: ../pages/LoginView.php');
+            header('Location: index.php?action=login');
             exit();
         }
     
         if ($_SESSION['user']['role'] !== 'admin') {
-            header('Location: ../pages/Home.php');
+            header('Location: index.php?action=goToHome');
             exit();
         }
     

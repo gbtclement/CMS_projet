@@ -50,12 +50,20 @@ class Page {
     }
 
     // Méthodes pour interagir avec la base de données
-    public static function createPage(PDO $pdo, $title, $content) {
-        $stmt = $pdo->prepare("INSERT INTO pages (title, content) VALUES (:title, :content)");
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $content);
-        $stmt->execute();
+    public static function createPage(PDO $pdo, $title, $content)
+    {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO pages (title, content) VALUES (:title, :content)");
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->execute();
+            return true; // La page a été créée avec succès
+        } catch (PDOException $e) {
+            error_log('Erreur lors de la création de la page: ' . $e->getMessage()); // Log de l'erreur
+            return false; // Si une erreur se produit, on retourne false
+        }
     }
+    
 
     public static function getAllPages() {
         $pdo = Database::getConnection();
